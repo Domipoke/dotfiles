@@ -1,4 +1,4 @@
--- SIMPLE KEY MAPPING
+-- SIMPLE KEY MAPPING (index in lua starts from 1)
 NUM_KEYS = {
   {code = "87"}, -- 1
   {code = "88"}, -- 2
