@@ -1,3 +1,4 @@
+-- SIMPLE KEY MAPPING
 NUM_KEYS = {
   {code = "87"}, -- 1
   {code = "88"}, -- 2
@@ -10,8 +11,18 @@ NUM_KEYS = {
   {code = "81"}, -- 9
   {code = "90"}  -- 0
 }
+-- Turn on/off features
+NVIDIA_OPTIONS_ENABLED = true
+PHONE_AS_DISPLAY = false
 
+-- PATHS
+HOME = "/home/domenico/"  
+ICC = "/home/domenico/mnt/code/dotfiles/CalibrateDisplayProfile.icc" -- Emulates windows' color palette
+
+-- DEFAULT APPS
 Terminal = "kitty"
+terminal_launch = "kitty bash -c " -- Space after -c is important
+
 FileManager = "dolphin"
 Browser = "vivaldi"
 Editor = "code"

@@ -1,0 +1,58 @@
+#!/bin/bash
+
+# --- CONFIGURAZIONE ---
+# SSID in ordine di priorità. Array in bash è così costruito ("oggetto 1" "oggetto 2" "oggetto 3"). Divisi da spazio.
+FAVOURITE_WIFIS=("eduroam")
+
+subcommand="$1"
+target_ssid="$2"
+
+case "$subcommand" in
+    list)
+        # echo "Scansione in corso..."
+        nmcli device wifi rescan 2>/dev/null
+        nmcli device wifi list
+        ;;
+
+    connect)
+        if [ -n "$target_ssid" ]; then
+            # CASO A: L'utente ha specificato un SSID
+            echo "Connessione a: $target_ssid..."
+            if nmcli device wifi connect "$target_ssid"; then
+                echo -e "\033[1;35m$target_ssid:\t\033[0;32mConnesso\033[0;33m"
+                nmcli device wifi list | grep -E "(^IN-USE|^\*)"
+            else
+                echo "Impossibile connettersi a $target_ssid"
+            fi
+        else
+            visible_wifis=$(nmcli --fields SSID device wifi list | tail -n +2 | sed 's/^ *//;s/ *$//')
+            
+            connected=false
+            for fav in "${FAVOURITE_WIFIS[@]}"; do
+                if echo "$visible_wifis" | grep -qFx "$fav"; then
+                    if nmcli device wifi connect "$fav" &>/dev/null; then
+                        echo -e "\033[1;35m$fav:\t\033[0;32mConnesso"
+                        connected=true
+                        break
+                    fi
+                else
+                    echo -e "\033[1;35m$fav:\t\033[0;31mNon trovato"
+                fi
+            done
+            
+            if [ "$connected" = false ]; then
+                echo "Nessun wifi preferito trovato"
+            else
+                echo -ne "\033[0;33m"
+                nmcli device wifi list | grep -E "(^IN-USE|^\*)" | awk '
+                    /^IN-USE/ { print "\033[0m" $0 } 
+                    /^\*/     { print "\033[0;33m" $0 "\033[0m" }'
+            fi
+        fi
+        ;;
+
+    *)
+        echo "Uso: wifi [list | connect [SSID]]"
+        exit 1
+        ;;
+esac

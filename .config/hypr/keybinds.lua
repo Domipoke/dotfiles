@@ -14,7 +14,7 @@ hl.bind(mainMod .. " + SHIFT + RETURN", hl.dsp.exec_cmd(Terminal, {
     size = {450, 450},
     move = {"(cursor_x-(450*0.5))", "(cursor_y-(450*0.5))"}
 }), {description = "Open a floating terminal"})
-hl.bind(mainMod .. " + E", hl.dsp.exec_cmd("kitty bash -c yazi"), { description = "Open file manager" })
+hl.bind(mainMod .. " + E", hl.dsp.exec_cmd(terminal_launch.."yazi"), { description = "Open file manager" })
 hl.bind(mainMod .. " + B", hl.dsp.exec_cmd(Browser), { description = "Open browser" })
 hl.bind(mainMod .. " + C", hl.dsp.exec_cmd(Editor), { description = "Open editor" })
 hl.bind(mainMod .. " + V", hl.dsp.exec_cmd(noctalia .. "panel-toggle clipboard"), {description = "Open Clipboard history"})

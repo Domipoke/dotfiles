@@ -1,4 +1,4 @@
-image = "/home/akiidjk/.config/wallpapers/eyes.png"
+image = HOME.."/.config/wallpapers/eyes.png"
 
 background = "#131314ff"
 
@@ -99,4 +99,3 @@ tertiary_container = "#3e352fff"
 tertiary_fixed = "#efe0d7ff"
 
 tertiary_fixed_dim = "#d2c4bbff"
-

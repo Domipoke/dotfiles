@@ -1,4 +1,3 @@
-require("colors")
 
 hl.config({
     general = {
