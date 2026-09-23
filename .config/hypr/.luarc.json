@@ -1,0 +1,14 @@
+{
+  "workspace": {
+    "library": [
+      "/usr/local/share/hypr/stubs"
+    ]
+  },
+  "diagnostics": {
+    "globals": [
+      "hl",
+      "mainMod",
+      "noctalia"
+    ]
+  }
+}

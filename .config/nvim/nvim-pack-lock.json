@@ -1,0 +1,36 @@
+{
+  "plugins": {
+    "fzf-lua": {
+      "rev": "3ff77862f6c62f7b850668435ae43aa026de8758",
+      "src": "https://github.com/ibhagwan/fzf-lua"
+    },
+    "gitsigns.nvim": {
+      "rev": "dd3f588bacbeb041be6facf1742e42097f62165d",
+      "src": "https://github.com/lewis6991/gitsigns.nvim"
+    },
+    "mini.completion": {
+      "rev": "6937ff1d7bf47ab58046c6685cc9057aa481ecb2",
+      "src": "https://github.com/nvim-mini/mini.completion"
+    },
+    "nvim-lspconfig": {
+      "rev": "246572944c2a1e2a646c2e7609ff619b0fe74c18",
+      "src": "https://github.com/neovim/nvim-lspconfig"
+    },
+    "nvim-treesitter": {
+      "rev": "4916d6592ede8c07973490d9322f187e07dfefac",
+      "src": "https://github.com/nvim-treesitter/nvim-treesitter"
+    },
+    "nvim-treesitter-textobjects": {
+      "rev": "851e865342e5a4cb1ae23d31caf6e991e1c99f1e",
+      "src": "https://github.com/nvim-treesitter/nvim-treesitter-textobjects"
+    },
+    "quicker.nvim": {
+      "rev": "1c9322b7e2967472548ba9bccd1ccd40e49d0a49",
+      "src": "https://github.com/stevearc/quicker.nvim"
+    },
+    "tokyonight.nvim": {
+      "rev": "cdc07ac78467a233fd62c493de29a17e0cf2b2b6",
+      "src": "https://github.com/folke/tokyonight.nvim"
+    }
+  }
+}
