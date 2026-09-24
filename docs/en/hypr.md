@@ -114,12 +114,58 @@ SUPER + T toggle selected window's floating view
 SUPER + J switch between vertical and horizzontal divided
 SUPER + G swap two window in the same workspace
 SUPER + P pin a window on all workspace
+SUPER + SHIFT + M Toggle nightmode (need a script)
 
 ### Workspaces
 
 #### Move between windows
+
 SUPER + CTRL + ArrowKey focus the window on the side of the pressed arrow key.
+
 #### Move between workspaces
+
+SUPER + num Focus num+1 workspace (1-10)
+SUPER + Tab Focus previous workspace
+SUPER + Left/Right Focus current-1/current+1 workspace
+ALT + TAB Open the window switcher
+
+#### Move a window to workspace
+
+SUPER + SHIFT + num Move the selected window to num+1 workspace (1-10)
+SUPER + SHIFT + Left/Right Move the selected window to current-1/current+1 workspace
+
+#### Window's Actions
+
+SUPER + mouse:272 (Left Click) Drag window
+SUPER + mouse:273 (Right Click) Resize window (works only on float windows or if there are more then one window in a workspace)
+SUPER + CTRL + SHIFT + ArrowKey Resize window
+
+### Fn Keys
+
+Fn Keys are captured on hyprland as their id. Ids can be found on documentation at: https://wiki.hypr.land/configuring/core/binds/
+You can use software like wev to know how a button is called.
+I set keys for volume, control player and control brightness
+
+### Screenshot
+
+For screenshots i use three different configuration as you can see.
+SUPER + SHIFT + S use grim (slurp) -> copy
+SUPER + CTRL + SHIFT + S grim (slurp) -> satty
+PRINT (or STAMP) grim -> copy
+
+#### Tools Explaination
+
+grim is the tool that take the screenshot. flags are -t png to define that is an image and -g $(slurp) to define the section.
+slurp is a tool that obtain a section of the screen in a format "x,y widthxheight".
+copy is a variable, in my case equal to wl-copy (as default for hyprland) and identify the tool need to copy in clipboard.
+satty is a tool to edit image adding lines, arrows, highlights and other stuff.
+
+### Noctalia
+SUPER + N Toggle Notifications
+SUPER + SHIFT + N Toggle Do Not Disturb
+SUPER + W Toggle Wallpapers
+SUPER + SHIFT + W toggle wallhave (need noctalia/wallhaven plugin installed)
+
 ## WindowsRule
 
 # What should i edit?
@@ -129,6 +175,10 @@ SUPER + CTRL + ArrowKey focus the window on the side of the pressed arrow key.
 - NVIDIA_OPTIONS_ENABLED
 - HOME
 - ICC
+- hypr_folder 
+- scripts_folder (if changed)
+- satty
+- all other favourites apps
 
 2. Edit monitors.lua
 

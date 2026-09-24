@@ -79,14 +79,13 @@ hl.bind("XF86MonBrightnessUp", hl.dsp.exec_cmd("brightnessctl s 5%+"), { repeati
 hl.bind("XF86MonBrightnessDown", hl.dsp.exec_cmd("brightnessctl s 5%-"), { repeating = true, description = "Lower brightness" })
 
 -- Screenshot a window
-local satty = "/home/domenico/.cargo/bin/satty --filename - --copy-command wl-copy --fullscreen --output-filename ~/Immagini/Screenshots/satty-$(date '+%Y%m%d-%H:%M:%S').png"
 local copy = "wl-copy"
-hl.bind("SUPER + SHIFT + S", hl.dsp.exec_cmd('grim -t png -g "$(slurp)" - | ' .. copy), { description = "Screenshot region" })
-hl.bind("SUPER + CTRL + SHIFT + S", hl.dsp.exec_cmd('grim -t png -g "$(slurp)" - | ' .. satty), { description = "Screenshot and edit"})
+hl.bind(mainMod .. " + SHIFT + S", hl.dsp.exec_cmd('grim -t png -g "$(slurp)" - | ' .. copy), { description = "Screenshot region" })
+hl.bind(mainMod .. " + CTRL + SHIFT + S", hl.dsp.exec_cmd('grim -t png -g "$(slurp)" - | ' .. satty), { description = "Screenshot and edit"})
 hl.bind("PRINT", hl.dsp.exec_cmd('grim - | ' .. copy), { description = "Fullscreen Screenshots"})
 -- Night mode and ToggleMirror scripts
-hl.bind("SUPER + M", hl.dsp.exec_cmd("bash ~/.config/hypr/scripts/toggleMirror.sh"), { description = "Toggle mirror" })
-hl.bind("SUPER + SHIFT + M", hl.dsp.exec_cmd("bash ~/.config/hypr/scripts/nightmode.sh"), { description = "Toggle night mode" })
+-- hl.bind(mainMod .. " + M", hl.dsp.exec_cmd("bash ~/.config/hypr/scripts/toggleMirror.sh"), { description = "Toggle mirror" })
+hl.bind(mainMod .. " + SHIFT + M", hl.dsp.exec_cmd("bash " .. scripts_folder .. "/nightmode.sh"), { description = "Toggle night mode" })
 
 
 
