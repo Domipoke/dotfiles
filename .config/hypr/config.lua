@@ -21,7 +21,7 @@ ICC = "/home/domenico/mnt/code/dotfiles/CalibrateDisplayProfile.icc" -- Emulates
 hypr_folder = HOME .. ".config/hypr"
 scripts_folder = hypr_folder .. "/scripts"
 -- DEFAULT APPS
-satty = HOME.."/.cargo/bin/satty --filename - --copy-command wl-copy --fullscreen --output-filename ~/Immagini/Screenshots/satty-$(date '+%Y%m%d-%H:%M:%S').png"
+satty = "/usr/bin/satty --filename - --copy-command wl-copy --fullscreen --output-filename ~/Immagini/Screenshots/satty-$(date '+%Y%m%d-%H:%M:%S').png"
 
 Terminal = "kitty"
 terminal_launch = "kitty bash -c " -- Space after -c is important
