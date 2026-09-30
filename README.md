@@ -13,3 +13,7 @@ As browser now i like vivaldi.
 As editor i use code for large projects and nvim for edit configurations.
 As discord i use vesktop client because official discord has issue to stream with wayland.
 
+# How to install
+Open a terminal (or press ctrl + alt + FKeys) and execute gitclone.sh by copy and paste commands one by one.
+
+Then from folder dotfiles run `sh reqs.sh`. You should be able to run this otherwise run `chmod +x reqs.sh`.

@@ -148,11 +148,11 @@ hl.window_rule({
 })
 
 hl.window_rule({opacity = 1, match = {title = "Mindustry"}})
-hl.window_rule({opacity=1, match = {title = "Minecraft 26.2"}})
+hl.window_rule({opacity=1, match = {title = "^Minecraft.*"}})
 
 hl.window_rule({
   size = {900, 500},
-  move = {"960 - (window_w*0.5)", "540 - (window_h*0.5)"},
+  center = true,
   float = true,
   match = {class = "fdm"},
 })

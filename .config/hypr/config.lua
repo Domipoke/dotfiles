@@ -16,9 +16,10 @@ NVIDIA_OPTIONS_ENABLED = true
 PHONE_AS_DISPLAY = false
 
 -- PATHS
-HOME = "/home/domenico/"  
-ICC = "/home/domenico/mnt/code/dotfiles/CalibrateDisplayProfile.icc" -- Emulates windows' color palette
-hypr_folder = HOME .. ".config/hypr"
+HOME = "/home/domenico/"
+DOTFILES_FOLDER = "/home/domenico/mnt/code/dotfiles" 
+ICC = DOTFILES_FOLDER.."/CalibrateDisplayProfile.icc" -- Emulates windows' color palette
+hypr_folder = DOTFILES_FOLDER .. "/.config/hypr"
 scripts_folder = hypr_folder .. "/scripts"
 -- DEFAULT APPS
 satty = "/usr/bin/satty --filename - --copy-command wl-copy --fullscreen --output-filename ~/Immagini/Screenshots/satty-$(date '+%Y%m%d-%H:%M:%S').png"
