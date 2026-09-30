@@ -1,24 +1,31 @@
+outputcolor="\033[1;34m"
+
+print () {
+    echo -e "\033[1;34m$1\033[0m"
+}
+print_error () {
+    echo -e "\033[1;31m$1\033[0m"
+}
 if [ "$EUID" -eq 0 ]; then
-    echo "Error: Please do not run this script with sudo."
-    echo "It will prompt for your password here when it hits the sudo command"
+    print "Error: Please do not run this script with sudo."
+    print "It will prompt for your password here when it hits the sudo command"
     exit 1
 fi
-
 FILE="$(pwd)/.config/hypr/config.lua"
 installer_flags="--needed --noconfirm"
 flagDesc="--needed check if already installed and skip it" 
 flagDesc="--noconfirm disable the prompt of y/n, need to install so the response is yes always. This script asks confirm when it has to install optional addon." 
-echo "This installer run pacman and yay installation with the following flags: "
-echo $installer_flags
-echo $flagDesc
+print "This installer run pacman and yay installation with the following flags: "
+print $installer_flags
+print $flagDesc
 
 # ╭───────────────────────────────────────────────────────────────────
 # │ START: Check if in the right folder
 # ╰───────────────────────────────────────────────────────────────────
 
 if [ ! -f "$FILE" ]; then
-    echo "Error: File '$FILE' does not exist."
-    echo "Go into dotfiles folder and run sh reqs.sh"
+    print "Error: File '$FILE' does not exist."
+    print "Go into dotfiles folder and run sh reqs.sh"
     exit 1
 fi
 
@@ -33,7 +40,7 @@ fi
 sudo pacman -S hyprland hyprpm nocatlia wl-clipboard polkit-gnome seahorse gnome-keyring hypridle dolphin satty kitty playerctl brightnessctl grim slurp $installer_flags
 
 if ! command -v yay &>/dev/null; then
-    echo "yay is not installed. Installing yay..."
+    print "yay is not installed. Installing yay..."
     
     # Ensure prerequisites are installed
     sudo pacman -S --needed git base-devel $installer_flags 
@@ -46,7 +53,7 @@ if ! command -v yay &>/dev/null; then
     # Clean up and return to the original directory
     cd - > /dev/null || exit
     rm -rf /tmp/yay-build
-    echo "yay installed successfully."
+    print "yay installed successfully."
 fi
 
 yay -S xwaylandvideobridge vicinae-bin $installer_flags
@@ -71,7 +78,7 @@ while true; do
             break
             ;;
         * ) 
-            echo "Invalid input. Please answer y or n."
+            print "Invalid input. Please answer y or n."
             ;;
     esac
 done
@@ -83,8 +90,8 @@ done
 # ╭───────────────────────────────────────────────────────────────────
 # │ START: Edits on Config and other optional installations
 # ╰───────────────────────────────────────────────────────────────────
-echo "Setup paths";
-echo "DOTFILES_FOLDER = $(pwd)";
+print "Setup paths";
+print "DOTFILES_FOLDER = $(pwd)";
 sed -i "s|DOTFILES_FOLDER = \".*\"|DOTFILES_FOLDER = \"$(pwd)\"|g" "$FILE"
 
 while true; do
@@ -92,33 +99,33 @@ while true; do
     
     # Check if package exists in official Arch repos (pacman)
     if pacman -Si "$browser" &>/dev/null; then
-        echo "Found '$browser' in official repositories. Installing..."
+        print "Found '$browser' in official repositories. Installing..."
         sudo pacman -S "$browser" $installer_flags
         
         sed -i "s|Browser = \".*\"|Browser = \"$browser\"|g" "$FILE"
-        echo "Config updated with Browser = \"$browser\"."
+        print "Config updated with Browser = \"$browser\"."
         break
         
     # Check if package exists in AUR (yay)
     elif command -v yay &>/dev/null && yay -Si "$browser" &>/dev/null; then
-        echo "Found '$browser' in AUR. Installing..."
+        print "Found '$browser' in AUR. Installing..."
         yay -S "$browser" $installer_flags
         
         sed -i "s|Browser = \".*\"|Browser = \"$browser\"|g" "$FILE"
-        echo "Config updated with Browser = \"$browser\"."
+        print "Config updated with Browser = \"$browser\"."
         break
     else
-        echo "Error: Package '$browser' could not be found via pacman or yay. Please try again."
+        print_error "Package '$browser' could not be found via pacman or yay. Please try again."
     fi
 done
 
-yay -S visual-studio-code-bin
+yay -S visual-studio-code-bin $installer_flags
 
 while true; do
     read -p "Do you use Spotify? (y/n): " choice
     case "$choice" in 
         [Yy]* ) 
-            sudo pacman -S spotify $installer_flags
+            yay -S spotify $installer_flags
             break
             ;;
         [Nn]* ) 
@@ -134,7 +141,7 @@ while true; do
                         break
                         ;;
                     * ) 
-                        echo "Invalid input. Please answer y or n."
+                        print "Invalid input. Please answer y or n."
                         ;;
                 esac
             done
@@ -142,7 +149,7 @@ while true; do
             break
             ;;
         * ) 
-            echo "Invalid input. Please answer y or n."
+            print "Invalid input. Please answer y or n."
             ;;
     esac
 done
@@ -166,7 +173,7 @@ while true; do
             break
             ;;
         * ) 
-            echo "Invalid input. Please answer y or n."
+            print "Invalid input. Please answer y or n."
             ;;
     esac
 done
@@ -183,7 +190,7 @@ while true; do
             break
             ;;
         * ) 
-            echo "Invalid input. Please answer y or n."
+            print "Invalid input. Please answer y or n."
             ;;
     esac
 done
@@ -199,7 +206,7 @@ while true; do
             break
             ;;
         * ) 
-            echo "Invalid input. Please answer y or n."
+            print "Invalid input. Please answer y or n."
             ;;
     esac
 done
@@ -207,14 +214,114 @@ done
 # ╭───────────────────────────────────────────────────────────────────
 # │ END: Other suggestions
 # ╰───────────────────────────────────────────────────────────────────
+# ╭───────────────────────────────────────────────────────────────────
+# │ START: Setup ln folders
+# ╰───────────────────────────────────────────────────────────────────
 
+ln_folders() {
+    create_symlink() {
+        # Ensure the parent .config directory exists just in case
+        mkdir -p "$(dirname "$2")"
+        ln -s "$1" "$2"
+        print "Symlink created: $2 -> $1"
+    }
+    if [ -L "$2" ] && [ "$(readlink "$2")" = "$1" ]; then
+        print "Symlink already correct: $2 -> $1"
+    else
+        if [ -d "$2" ]; then
+            # Check if the directory is empty using ls -A (returns empty string if no files)
+            if [ -z "$(ls -A "$2")" ]; then
+                print "Directory is empty. Removing..."
+                rm -rf "$2"
+                create_symlink "$1" "$2"
+            else
+                # Directory is not empty, start the prompt loop
+                while true; do
+                    # Print the warning in red
+                    print_error "Folder $2 exists do you want to remove that?\033[0m"
+                    read -p "(y/n): " choice1
+                    
+                    case "$choice1" in 
+                        [Yy]* ) 
+                            # Second confirmation loop
+                            while true; do
+                                read -p "Are you sure? (y/n): " choice2
+                                case "$choice2" in
+                                    [Yy]* )
+                                        rm -rf "$2"
+                                        create_symlink "$1" "$2"
+                                        break 2 # Breaks out of both while loops
+                                        ;;
+                                    [Nn]* )
+                                        print "Skipping symlink."
+                                        break 2
+                                        ;;
+                                    * )
+                                        print "Invalid input. Please answer y or n."
+                                        ;;
+                                esac
+                            done
+                            ;;
+                        [Nn]* ) 
+                            print "Skipping symlink."
+                            break
+                            ;;
+                        * ) 
+                            print "Invalid input. Please answer y or n."
+                            ;;
+                    esac
+                done
+            fi
+        else
+            # Directory does not exist
+            create_symlink "$1" "$2"
+        fi
+    fi
+}
+
+ln_folders "$(pwd)/.config/hypr" "$HOME/.config/hypr"
+ln_folders "$(pwd)/.config/kitty" "$HOME/.config/kitty"
+ln_folders "$(pwd)/.config/noctalia" "$HOME/.config/noctalia"
+ln_folders "$(pwd)/.config/vicinae" "$HOME/.config/vicinae"
+ln_folders "$(pwd)/.config/zathura" "$HOME/.config/zathura"
+
+while true; do
+    read -p "Copy scripts? (y/n): " choice
+    case "$choice" in 
+        [Yy]* ) 
+            for file in "$(pwd)/scripts"/*; do
+    
+                # Check if it is an actual file (skips sub-folders if you have any)
+                if [ -f "$file" ]; then
+                    filename="$(basename "$file")"
+                    ln_dotconfig "$file" "$HOME/.local/usr/bin/$filename"                    
+                    chmod +x "$file"
+                fi
+            done
+            break
+            ;;
+        [Nn]* ) 
+            print "copy the scripts you want to activate manually into ~/.local/usr/bin and remember to chmod +x all the file to use in a shell globally"
+            break
+            ;;
+        * ) 
+            print "Invalid input. Please answer y or n."
+            ;;
+    esac
+done
+
+
+
+# ╭───────────────────────────────────────────────────────────────────
+# │ END: Setup ln folders
+# ╰───────────────────────────────────────────────────────────────────
 # ╭───────────────────────────────────────────────────────────────────
 # │ START: What to do now?
 # ╰───────────────────────────────────────────────────────────────────
 
-echo "What to do now?"
-echo -e "\033[0;31mEdit .config/hypr/monitors.lua monitor 'output' and 'mode'\033[0m"
-echo "kitty +kitten themes"
+print "What to do now?"
+print_error "Edit .config/hypr/monitors.lua monitor 'output' and 'mode'\033[0m"
+print "kitty +kitten themes"
 
 # ╭───────────────────────────────────────────────────────────────────
 # │ END: What to do now?
