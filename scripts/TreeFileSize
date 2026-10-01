@@ -1,0 +1,3 @@
+#!/bin/bash 
+
+ncdu --exclude "/home/domenico/mnt/*" --exclude "/home/domenico/Windows/*" --exclude "/mnt/" -2 --show-graph /

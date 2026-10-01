@@ -1,0 +1,14 @@
+#!/bin/bash
+
+
+uv cache clean > /dev/null
+echo "uv cleaned"
+
+paru -Scc --noconfirm > /dev/null
+echo "paru cleaned"
+
+yay -Scc --noconfirm > /dev/null
+echo "yay cleaned"
+
+rm -rf ~/.gradle/caches/ ~/.gradle/wrapper/dists/ ~/.gradle/daemon/ > /dev/null
+echo "gradle cleaned"
