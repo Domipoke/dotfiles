@@ -27,9 +27,38 @@
       }
    },
    "providers": {
+      "@HenriChabrand/store.raycast.notion": {
+         "preferences": {
+            "open_in": "Notion",
+            "properties_in_page_previews": false
+         }
+      },
       "@dagimg-dot/store.vicinae.wifi-commander": {
          "preferences": {
             "network-cli-tool": "nmcli"
+         }
+      },
+      "@leiserfg/store.vicinae.ssh": {
+         "entrypoints": {
+            "ssh": {
+               "enabled": true
+            }
+         }
+      },
+      "@marcjulian/store.raycast.obsidian": {
+         "preferences": {
+            "configFileName": ".obsidian"
+         }
+      },
+      "@thomas/store.raycast.visual-studio-code": {
+         "preferences": {
+            "build": "Code",
+            "closeOtherWindows": false,
+            "gitBranchColor": "",
+            "keepSectionOrder": false,
+            "layout": "list",
+            "showGitBranch": true,
+            "terminalApp": "com.apple.Terminal"
          }
       },
       "applications": {
@@ -103,6 +132,15 @@
             "customDirs": [
                "/home/domenico/mnt/Scripts/vicinae"
             ]
+         }
+      },
+      "snippets": {
+         "preferences": {
+            "enabled": true,
+            "keyDelay": "2",
+            "layout": "",
+            "prePasteDelay": "0",
+            "undo": true
          }
       }
    }
